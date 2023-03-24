@@ -94,6 +94,53 @@ app.put("/api/v1/events/:id", async(req,res) => {
     }
 });
 
+app.post("/api/v1/events", (req,res) => {
+    const {title, description, location, startTime, endTime} = req.body;
+    if(!title) {
+        return res.status(400).json({
+            error: "Title is required"
+        })
+    }
+});
+
+app.put("/api/v1/events/:id", (req,res) => {
+    const {id} = req.params;
+    const {title, description, location, startTime, endTime} = req.body;
+    if(!title) {
+        return res.status(400).json({
+            error: "Title is required"
+        })
+    }
+});
+
+app.get("/api/v1/events/:id", (req,res) => {
+    const {id} = req.params;
+    const event = User.find(e => e.id === Number(id));
+
+    if(!event) {
+        return res.status(400).json({
+            error: "There is no event with that id"
+        })
+    }
+});
+
+app.delete("/api/v1/events/:id", (req,res) => {
+    const {id} = req.params;
+    const eventIndex = User.findIndex(e => e.id === Number(id));
+
+    if(eventIndex === -1) {
+        return res.status(400).json({
+            error: "Event not found"
+        });
+    }
+        events.splice(eventIndex,1);
+        return res.json({
+            message: "Event deleted succesfully"
+        })
+});
+
+
+
 app.get("*", (req,res) => {
     res.status(404).send("Event not found!!");
 })
