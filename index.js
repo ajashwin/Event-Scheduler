@@ -11,7 +11,7 @@ const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({extended:false}))
 app.use(bodyParser.json());
 
-app.post("/api/v1/users", async(req,res) => {
+app.post("/api/v1/events", async(req,res) => {
     try{
         const user = await User.create(req.body);
         res.status(201).json({
@@ -27,7 +27,7 @@ app.post("/api/v1/users", async(req,res) => {
     }
 });
 
-app.get("/api/v1/users", async(req,res) => {
+app.get("/api/v1/events", async(req,res) => {
     try {
         const users = await User.find();
         res.status(200).json({
@@ -43,7 +43,7 @@ app.get("/api/v1/users", async(req,res) => {
     }
 });
 
-app.get("/api/v1/users/:id", async(req,res) => {
+app.get("/api/v1/events/:id", async(req,res) => {
     try {
         const users = await User.find({_id:req.params});
         res.status(200).json({
@@ -59,7 +59,7 @@ app.get("/api/v1/users/:id", async(req,res) => {
     }
 });
 
-app.delete("/api/v1/users/:id", async(req,res) => {
+app.delete("/api/v1/events/:id", async(req,res) => {
     try {
         const user = await User.deleteOne({_id:req.params.id}, req.body);
         
@@ -77,7 +77,7 @@ app.delete("/api/v1/users/:id", async(req,res) => {
 });
 
 
-app.put("/api/v1/users/:id", async(req,res) => {
+app.put("/api/v1/events/:id", async(req,res) => {
     try {
         await User.updateOne({_id:req.params.id}, req.body);
         const user = await User.findOne({_id:req.params.id});
